@@ -12,8 +12,17 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// 客戶端須在header加上: {Authorization:Bearer $token}
+Route::middleware('auth:sanctum')->post('user', function (Request $request) {
+    return $request->user();
+});
+
+Route::middleware('auth:sanctum')->post('logout', function (Request $request) {
+    $request->user()->tokens()->delete();
 });
